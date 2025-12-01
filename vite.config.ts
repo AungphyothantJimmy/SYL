@@ -5,4 +5,5 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
   ],
+  base: "/SYL/",   // <-- your GitHub repo name here
 })
