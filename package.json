@@ -1,6 +1,7 @@
 {
   "name": "syl",
   "homepage": "https://AungphyothantJimmy.github.io/SYL/",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
