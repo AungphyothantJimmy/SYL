@@ -4,7 +4,7 @@ import Home from "./components/Home";
 import Featured from "./components/Featured";
 import About from "./components/About";
 import SignatureItems from "./components/SignatureItems";
-import AllItemsPage from "./components/AllItems"; // new page
+import AllItemsPage from "./components/AllItems";
 import Footer from "./components/Footer";
 
 import s1 from "./images/s1.jpg";
@@ -42,7 +42,7 @@ export const allSignatureItems: SignaturedItem[] = [
   { id: 12, name: "item 12", price: "MMK 000,000", image: s12 },
 ];
 
-const signatureItems = allSignatureItems.slice(0, 3); // first 3 items for homepage
+const signatureItems = allSignatureItems.slice(0, 3);
 
 const App: React.FC = () => {
   const footerRef = useRef<HTMLDivElement>(null);
@@ -57,14 +57,13 @@ const App: React.FC = () => {
         <Route
           path="/"
           element={
-            <div>
-              {/* Pass scrollToFooter to Home */}
+            <>
               <Home scrollToFooter={scrollToFooter} />
               <Featured />
               <SignatureItems items={signatureItems} showAllButton />
               <About />
               <Footer ref={footerRef} />
-            </div>
+            </>
           }
         />
         <Route path="/all-items" element={<AllItemsPage />} />
