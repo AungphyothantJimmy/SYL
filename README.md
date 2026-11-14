@@ -1,73 +1,141 @@
-# React + TypeScript + Vite
+# Shwe Yadanar Lin (SYL)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A dynamic jewelry storefront built with **React + TypeScript + Vite + Tailwind CSS**, backed by **Supabase** for database, authentication, and image storage.
 
-Currently, two official plugins are available:
+The public website loads all of its content from the database, and a password-protected admin panel lets you manage it without touching any code.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Public storefront: hero, featured collections, signature products, product detail pages, about, contact/footer
+- Admin panel at `#/admin`:
+  - Email/password login (Supabase Auth)
+  - Create, edit, reorder, and delete products
+  - Manage featured collections
+  - Edit every text section, contact detail, social link, and image
+  - Upload images to Supabase Storage
+- Row Level Security: visitors can only read; only signed-in admins can write
+- Graceful fallback: if Supabase is not configured, the site still renders the original content
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+| Layer     | Technology                                  |
+| --------- | ------------------------------------------- |
+| Frontend  | React 19, TypeScript, Vite, Tailwind CSS v4 |
+| Routing   | React Router (hash routing)                 |
+| Backend   | Supabase (Postgres, Auth, Storage)          |
+| Icons     | lucide-react                                |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 1. Create a Supabase project
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Go to [supabase.com](https://supabase.com) and create a new project.
+2. Wait for the database to finish provisioning.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 2. Create the database schema
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. In your Supabase project, open **SQL Editor → New query**.
+2. Paste the contents of [`supabase/schema.sql`](supabase/schema.sql).
+3. Click **Run**.
+
+This creates the `products`, `featured_collections`, and `site_settings` tables, the `site-images` storage bucket, security policies, and seeds the current website content. It is safe to run again — it will not overwrite your edits.
+
+## 3. Create your admin account
+
+There is no public sign-up form on purpose (so visitors cannot create accounts).
+
+1. In Supabase, go to **Authentication → Users → Add user → Create new user**.
+2. Enter the admin email and password, and confirm the user.
+3. Recommended: go to **Authentication → Sign In / Providers → Email** and turn **Allow new users to sign up** off.
+
+You can log in at `/#/admin` with that email and password.
+
+## 4. Configure environment variables
+
+Copy the example file and fill in your project values:
+
+```bash
+cp .env.example .env
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Find the values in Supabase under **Project Settings → API**:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-public-key
 ```
+
+> The anon key is safe to expose in the browser. Security is enforced by Row Level Security policies. Never use the `service_role` key in the frontend.
+
+## 5. Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+- Website: `http://localhost:5173/`
+- Admin: `http://localhost:5173/#/admin`
+
+## Available scripts
+
+| Command           | Description                          |
+| ----------------- | ------------------------------------ |
+| `npm run dev`     | Start the Vite dev server            |
+| `npm run build`   | Type-check and build to `dist/`      |
+| `npm run preview` | Preview the production build         |
+| `npm run lint`    | Run ESLint                           |
+
+## Project structure
+
+```text
+src/
+  components/          Public site sections
+  components/admin/    Admin panel (login, layout, managers)
+  context/             Auth + site-content providers
+  lib/
+    api.ts             Supabase data access (CRUD + uploads)
+    defaults.ts        Fallback content + default images
+    images.ts          Base-path-aware image URLs
+    supabase.ts        Supabase client (+ config check)
+    types.ts           Shared data types
+supabase/
+  schema.sql           Tables, RLS, storage policies, seed data
+public/images/         Static fallback images
+```
+
+## How content works
+
+- On load, `ContentProvider` fetches `site_settings`, `products`, and `featured_collections` in parallel.
+- The public components read from that context, so the admin's changes appear after a refresh (or immediately after saving in the admin panel).
+- Uploaded images go to the public `site-images` bucket and are stored as absolute URLs.
+- Seed rows use paths like `images/s1.jpg`. `resolveImage()` prefixes the Vite base URL, so they work on root domains and sub-path deploys (such as GitHub Pages project sites).
+
+## Deploying
+
+The frontend is a static build, so it can be hosted anywhere. Two environment variables must be present **at build time**.
+
+### Vercel / Netlify
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in the project's environment settings.
+
+### GitHub Pages
+
+1. Add the secrets `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in **Repository → Settings → Secrets and variables → Actions**.
+2. Use a workflow that runs `npm run build` with those secrets as env vars, then publishes `dist/`.
+3. Set `base` in `vite.config.ts` to your repository name (e.g. `/SYL/`) if the site is served from a sub-path. Static image paths and hash routing already handle sub-paths.
+
+Because the app uses `HashRouter`, refreshing deep links works on GitHub Pages without extra rewrite rules.
+
+## Adding new editable fields
+
+1. Add the column to the table in Supabase (SQL Editor).
+2. Add it to the matching type in `src/lib/types.ts` and the fallback in `src/lib/defaults.ts`.
+3. Render it in the relevant public component.
+4. Add an input for it in `src/components/admin/SiteContentManager.tsx` (or the relevant manager).
+
+## Security notes
+
+- RLS allows public `SELECT` only. All writes require an authenticated user.
+- The storage bucket is public for reads; uploads and deletes require authentication.
+- Do not commit `.env` (it is gitignored).

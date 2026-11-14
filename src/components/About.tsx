@@ -1,57 +1,56 @@
 import React from "react";
-import crafting from "../images/nla.png";
+import { useContent } from "../context/ContentContext";
+import { asset } from "../lib/defaults";
+import { resolveImage } from "../lib/images";
+
+const statColor: Record<string, string> = {
+  green: "text-green-600",
+  blue: "text-blue-500",
+  yellow: "text-yellow-500",
+  red: "text-red-500",
+  purple: "text-purple-500",
+  gray: "text-gray-600",
+};
 
 const About: React.FC = () => {
+  const { data } = useContent();
+  const { settings } = data;
+
   return (
     <section
       className="py-16 px-4 md:px-6 overflow-hidden"
       style={{ backgroundColor: "oklch(0.923 0.003 48.717)" }}
     >
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        {/* Text */}
         <div>
           <h2 className="text-4xl md:text-6xl font-bold text-black leading-tight">
-            Crafting Beauty with Passion
+            {settings.about_title}
           </h2>
 
-          <p className="text-gray-700 mt-5 leading-relaxed text-base md:text-lg">
-            As a recent founder and dedicated crafter, I create jewelry that
-            reflects individuality and timeless elegance. Each piece is
-            thoughtfully designed and handcrafted, blending artistic vision with
-            precision.
-          </p>
+          <div className="text-gray-700 mt-5 leading-relaxed text-base md:text-lg whitespace-pre-line">
+            {settings.about_body}
+          </div>
 
-          <p className="text-gray-700 mt-5 leading-relaxed text-base md:text-lg">
-            Every gemstone is handpicked for its sparkle and character. Every
-            setting is crafted with care, making each piece as unique as the
-            person who wears it.
-          </p>
-
-          {/* Stats - subtle containers */}
           <div className="flex flex-wrap justify-between gap-4 mt-10">
-            <div className="flex-1 min-w-[120px] bg-white/20 rounded-lg p-4 text-center">
-              <p className="text-2xl md:text-3xl font-bold text-green-600">
-                Quality Materials
-              </p>
-            </div>
-
-            <div className="flex-1 min-w-[120px] bg-white/20 rounded-lg p-4 text-center">
-              <p className="text-2xl md:text-3xl font-bold text-blue-500">
-                Customer Delight
-              </p>
-            </div>
-
-            <div className="flex-1 min-w-[120px] bg-white/20 rounded-lg p-4 text-center">
-              <p className="text-2xl md:text-3xl font-bold text-yellow-500">
-                500+ Designs
-              </p>
-            </div>
+            {settings.about_stats.map((stat, index) => (
+              <div
+                key={`${stat.label}-${index}`}
+                className="flex-1 min-w-[120px] bg-white/20 rounded-lg p-4 text-center"
+              >
+                <p
+                  className={`text-2xl md:text-3xl font-bold ${
+                    statColor[stat.color] ?? statColor.green
+                  }`}
+                >
+                  {stat.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Image */}
         <img
-          src={crafting}
+          src={resolveImage(settings.about_image_url, asset("nla.png"))}
           alt="Craftsman"
           className="w-full rounded-2xl shadow-xl object-cover"
         />

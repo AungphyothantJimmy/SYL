@@ -1,78 +1,101 @@
 import { forwardRef } from "react";
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram } from "lucide-react";
-import logo from "../images/logo.jpg";
+import { useContent } from "../context/ContentContext";
+import { asset } from "../lib/defaults";
+import { resolveImage } from "../lib/images";
 
 const Footer = forwardRef<HTMLDivElement>((_, ref) => {
+  const { data } = useContent();
+  const { settings } = data;
+
   return (
     <div ref={ref} className="w-full bg-[#111827] text-white">
-      {/* Footer Section */}
       <footer className="bg-[#111827] py-16 px-6 md:px-20 text-gray-300 w-full">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 w-full">
-          {/* Left Section — Logo, Description, Social */}
           <div className="w-full">
             <div>
               <img
-                src={logo}
-                alt="Shwe Yadanar Lin Logo"
+                src={resolveImage(settings.footer_logo_url, asset("logo.jpg"))}
+                alt={`${settings.store_name} Logo`}
                 className="h-20 w-20 object-cover rounded-full border-2 border-white shadow-md mb-6"
               />
             </div>
 
-            <p className="text-gray-400 mb-6 max-w-md">
-              Creating modern elegance since 2022. Your trusted destination for
-              beautifully crafted jewelry designed to shine for a lifetime.
+            <p className="text-gray-400 mb-6 max-w-md whitespace-pre-line">
+              {settings.footer_description}
             </p>
 
-            {/* Social Icons */}
             <div className="flex space-x-6 text-gray-400 text-xl mt-4">
-              <a
-                href="https://web.facebook.com/profile.php?id=100063796764466" // <-- replace with your real FB link
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition"
-              >
-                <Facebook size={46} />
-              </a>
+              {settings.facebook_url && (
+                <a
+                  href={settings.facebook_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition"
+                  aria-label="Facebook"
+                >
+                  <Facebook size={46} />
+                </a>
+              )}
 
-              <a
-                href="https://www.instagram.com/syl__jewelry/" // <-- replace with your real IG link
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition"
-              >
-                <Instagram size={46} />
-              </a>
+              {settings.instagram_url && (
+                <a
+                  href={settings.instagram_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition"
+                  aria-label="Instagram"
+                >
+                  <Instagram size={46} />
+                </a>
+              )}
             </div>
           </div>
 
-          {/* Right Section — Contact Info */}
           <div className="w-full">
             <h3 className="font-semibold text-white mb-4">Contact Info</h3>
             <ul className="space-y-4 text-gray-400">
-              <li className="flex items-start space-x-3">
-                <MapPin size={18} />
-                <span>
-                  123 Luxury Avenue, Diamond District, New York, NY 10036
-                </span>
-              </li>
+              {settings.contact_address && (
+                <li className="flex items-start space-x-3">
+                  <MapPin size={18} className="mt-0.5 shrink-0" />
+                  <span className="whitespace-pre-line">
+                    {settings.contact_address}
+                  </span>
+                </li>
+              )}
 
-              <li className="flex items-center space-x-3">
-                <Phone size={18} />
-                <span>+95 9 775 815814</span>
-              </li>
+              {settings.contact_phone && (
+                <li className="flex items-center space-x-3">
+                  <Phone size={18} className="shrink-0" />
+                  <a
+                    href={`tel:${settings.contact_phone}`}
+                    className="hover:text-white transition"
+                  >
+                    {settings.contact_phone}
+                  </a>
+                </li>
+              )}
 
-              <li className="flex items-center space-x-3">
-                <Mail size={18} />
-                <span>info@jewelrystore.com</span>
-              </li>
+              {settings.contact_email && (
+                <li className="flex items-center space-x-3">
+                  <Mail size={18} className="shrink-0" />
+                  <a
+                    href={`mailto:${settings.contact_email}`}
+                    className="hover:text-white transition"
+                  >
+                    {settings.contact_email}
+                  </a>
+                </li>
+              )}
 
-              <li className="flex items-start space-x-3">
-                <Clock size={18} />
-                <span>
-                  Mon - Sat: 10:00 AM - 7:00 PM <br />
-                  Sunday: 12:00 PM - 5:00 PM
-                </span>
-              </li>
+              {settings.contact_hours && (
+                <li className="flex items-start space-x-3">
+                  <Clock size={18} className="mt-0.5 shrink-0" />
+                  <span className="whitespace-pre-line">
+                    {settings.contact_hours}
+                  </span>
+                </li>
+              )}
             </ul>
           </div>
         </div>
