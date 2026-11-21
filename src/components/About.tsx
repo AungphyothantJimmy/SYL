@@ -22,6 +22,18 @@ const About: React.FC = () => {
       style={{ backgroundColor: "oklch(0.94 0.02 150)" }}
     >
       <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div className="relative">
+          <div
+            aria-hidden
+            className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-amber-400/30 to-rose-500/30 blur-2xl"
+          />
+          <img
+            src={resolveImage(settings.about_image_url, asset("nla.png"))}
+            alt="Craftsman"
+            className="relative w-full rounded-2xl shadow-2xl object-cover border border-white/40"
+          />
+        </div>
+
         <div>
           <h2 className="text-4xl md:text-6xl font-bold leading-tight bg-gradient-to-r from-amber-500 via-rose-500 to-amber-600 bg-clip-text text-transparent">
             {settings.about_title}
@@ -47,18 +59,6 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        <div className="relative">
-          <div
-            aria-hidden
-            className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-amber-400/30 to-rose-500/30 blur-2xl"
-          />
-          <img
-            src={resolveImage(settings.about_image_url, asset("nla.png"))}
-            alt="Craftsman"
-            className="relative w-full rounded-2xl shadow-2xl object-cover border border-white/40"
-          />
         </div>
       </div>
     </section>

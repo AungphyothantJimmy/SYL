@@ -43,8 +43,8 @@ const SignatureItems: React.FC<Props> = ({
       className="relative py-16 px-4 md:px-6 overflow-hidden"
       style={{ backgroundColor: "oklch(0.94 0.02 230)" }}
     >
-      <h2 className="text-center text-4xl md:text-6xl font-bold leading-tight bg-gradient-to-r from-amber-500 via-rose-500 to-amber-600 bg-clip-text text-transparent">
-        {resolvedHeading}
+      <h2 className="text-center text-4xl md:text-6xl font-bold leading-tight">
+        <span className="gold-glow">{resolvedHeading}</span>
       </h2>
 
       {resolvedSubheading && (

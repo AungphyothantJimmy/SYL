@@ -3,7 +3,9 @@ import SignatureItems from "./SignatureItems";
 import BackButton from "./BackButton";
 import { useContent } from "../context/ContentContext";
 
-const SectionBackground = "oklch(0.94 0.02 150)";
+// Keep the page wrapper identical to the Signature Items section background so
+// the Back button header blends into the grid instead of forming a green band.
+const SectionBackground = "oklch(0.94 0.02 230)";
 
 const AllItemsPage: React.FC = () => {
   const { data } = useContent();

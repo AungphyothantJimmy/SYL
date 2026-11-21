@@ -34,3 +34,100 @@ html, body {
     background-color: #ffffff;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Luxury gold headings
+   A metallic gradient with a travelling reflection, plus layered shadows that
+   give the lettering a soft glow and an embossed, mirror-like edge.
+--------------------------------------------------------------------------- */
+/*
+ * The background tile is two element-widths wide (200%). Because percentage
+ * positions are resolved against (element width - image width), animating
+ * from 0% to 200% shifts the pattern by exactly one full tile (2 x width).
+ * That makes the loop seamless: the reflection crosses once per cycle and
+ * starts again only when the animation legitimately repeats.
+ *
+ * Do not change the end position or background-size independently — e.g.
+ * 220% + 200% shifts the pattern 1.09 tiles, which makes a second reflection
+ * pass start before the cycle ends and then snap back (the "restart" bug).
+ */
+@keyframes gold-reflection {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.gold-glow {
+  display: inline-block;
+  background-image: linear-gradient(
+    100deg,
+    #6b4c12 0%,
+    #9a7014 16%,
+    #d8ae45 28%,
+    #fff6d8 38%,
+    #f2d27f 44%,
+    #c99a22 54%,
+    #8a6417 68%,
+    #6b4c12 84%,
+    #6b4c12 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255, 246, 216, 0.5))
+    drop-shadow(0 2px 3px rgba(74, 48, 4, 0.28))
+    drop-shadow(0 0 12px rgba(212, 175, 55, 0.45))
+    drop-shadow(0 0 30px rgba(184, 134, 11, 0.3))
+    drop-shadow(0 0 52px rgba(184, 134, 11, 0.16));
+  animation: gold-reflection 7s linear infinite;
+  will-change: background-position;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gold-glow {
+    animation: none;
+  }
+}
+
+/* Brighter metal for the hero store name, which sits over a photograph. */
+.gold-glow-bright {
+  background-image: linear-gradient(
+    100deg,
+    #e7c56f 0%,
+    #f6e4ae 16%,
+    #fffbe6 30%,
+    #f3d689 44%,
+    #dcb765 56%,
+    #f9ecc4 70%,
+    #eacb79 84%,
+    #e7c56f 100%
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   Hero title — a pearl / champagne gradient with a soft warm glow so the
+   main message feels luxurious rather than a flat white.
+--------------------------------------------------------------------------- */
+.hero-title-lux {
+  background-image: linear-gradient(
+    100deg,
+    #fffdf7 0%,
+    #fbf3dd 22%,
+    #f3e0b4 46%,
+    #eacf9a 60%,
+    #f8eccd 80%,
+    #fffdf7 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.65))
+    drop-shadow(0 0 28px rgba(246, 226, 179, 0.22));
+}

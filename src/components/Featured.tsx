@@ -70,8 +70,8 @@ const Featured: React.FC = () => {
       className="relative py-16 px-4 md:px-6 overflow-hidden"
       style={{ backgroundColor: "oklch(0.94 0.02 150)" }}
     >
-      <h2 className="text-center text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-500 via-rose-500 to-amber-600 bg-clip-text text-transparent">
-        {settings.featured_heading}
+      <h2 className="text-center text-3xl md:text-4xl font-bold">
+        <span className="gold-glow">{settings.featured_heading}</span>
       </h2>
 
       <p className="text-center text-gray-600 mt-2 px-2 md:px-0 whitespace-pre-line">

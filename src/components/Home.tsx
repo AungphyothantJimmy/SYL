@@ -84,15 +84,15 @@ const Home: React.FC<HomeProps> = ({ scrollToFooter }) => {
 
       {/* Store Name */}
       <h2
-        className="absolute top-8 left-1/2 -translate-x-1/2 z-20
-             text-4xl md:text-6xl lg:text-7xl xl:text-8xl
-             font-extrabold tracking-[0.25em]
-             text-transparent bg-clip-text
-             bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-500
+        className="absolute top-6 left-1/2 -translate-x-1/2 z-20 w-[92%] text-center
+             text-2xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl
+             font-extrabold tracking-[0.12em] sm:tracking-[0.25em]
              drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]
-             font-serif whitespace-nowrap"
+             font-serif break-words"
       >
-        {settings.store_name}
+        <span className="gold-glow gold-glow-bright">
+          {settings.store_name}
+        </span>
       </h2>
 
       {/* Content */}
@@ -104,7 +104,7 @@ const Home: React.FC<HomeProps> = ({ scrollToFooter }) => {
             Handcrafted fine jewelry
           </div>
 
-          <h1 className="mt-5 text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight whitespace-pre-line drop-shadow-[0_6px_24px_rgba(0,0,0,0.6)]">
+          <h1 className="hero-title-lux mt-5 text-3xl md:text-5xl lg:text-6xl font-bold leading-tight whitespace-pre-line">
             {settings.hero_title}
           </h1>
 
@@ -118,7 +118,10 @@ const Home: React.FC<HomeProps> = ({ scrollToFooter }) => {
               onClick={() => navigate("/all-items")}
             >
               {settings.hero_cta_text}
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight
+                size={18}
+                className="group-hover:translate-x-1 transition-transform"
+              />
             </button>
 
             <button
