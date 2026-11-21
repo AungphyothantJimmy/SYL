@@ -82,7 +82,7 @@ const SignatureItems: React.FC<Props> = ({
             <p className="text-gray-700 mt-1">{formatPrice(item.price)}</p>
 
             <button
-              className="mt-2 px-5 py-2 border border-black rounded-md
+              className="mt-2 px-5 py-2 border border-black rounded-md text-black
                          hover:bg-black hover:text-white
                          hover:scale-105 transition-all duration-300"
               onClick={() => navigate(`/item/${item.id}`)}
