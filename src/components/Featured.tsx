@@ -6,8 +6,6 @@ import { asset } from "../lib/defaults";
 import { resolveImage } from "../lib/images";
 import type { FeaturedCollection } from "../lib/types";
 
-const SectionBackground = "oklch(0.94 0.025 20)";
-
 const Featured: React.FC = () => {
   const { data } = useContent();
   const { settings, featured } = data;
