@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, LayoutGrid, Phone } from "lucide-react";
+import { LayoutGrid, Phone } from "lucide-react";
 import { useContent } from "../context/ContentContext";
+import BackButton from "./BackButton";
 import { asset } from "../lib/defaults";
 import { formatPrice } from "../lib/format";
 import { resolveImage } from "../lib/images";
@@ -66,13 +67,7 @@ const ItemDetailPage: React.FC = () => {
     >
       {/* Top navigation */}
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 pt-6 md:px-6">
-        <button
-          className="flex items-center gap-2 border border-gray-800 px-4 py-2 rounded-md text-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft size={16} />
-          Back
-        </button>
+        <BackButton />
 
         <button
           className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-800 hover:scale-105 transition-all duration-300"
@@ -99,7 +94,7 @@ const ItemDetailPage: React.FC = () => {
               </p>
             )}
 
-            <h1 className="mt-2 text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
+            <h1 className="mt-2 text-3xl md:text-5xl font-bold bg-gradient-to-r from-amber-500 via-rose-500 to-amber-600 bg-clip-text text-transparent leading-tight">
               {product.name}
             </h1>
 
@@ -143,15 +138,15 @@ const ItemDetailPage: React.FC = () => {
       {/* Related items */}
       {related.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pb-16 md:px-6">
-          <h2 className="text-center text-2xl md:text-3xl font-bold text-gray-900">
+          <h2 className="text-center text-2xl md:text-3xl font-bold bg-gradient-to-r from-amber-500 via-rose-500 to-amber-600 bg-clip-text text-transparent">
             You May Also Like
           </h2>
 
-          <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-6">
             {related.map((item) => (
               <button
                 key={item.id}
-                className="group text-left"
+                className="group text-left w-[calc(50%-0.75rem)] md:w-[calc(25%-1.125rem)]"
                 onClick={() => navigate(`/item/${item.id}`)}
               >
                 <img

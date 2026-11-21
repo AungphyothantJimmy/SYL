@@ -262,6 +262,30 @@ export default function SiteContentManager() {
       </Section>
 
       <Section
+        title="Store History section"
+        description="Tell the story of your store."
+      >
+        <TextField
+          label="Title"
+          value={settings.store_history_title}
+          onChange={(event) => update("store_history_title", event.target.value)}
+        />
+        <TextArea
+          label="Body"
+          value={settings.store_history_body}
+          onChange={(event) => update("store_history_body", event.target.value)}
+          hint="Use blank lines to separate paragraphs."
+          className="min-h-40"
+        />
+        <ImageField
+          label="Image"
+          value={settings.store_history_image_url}
+          onChange={(value) => update("store_history_image_url", value)}
+          folder="site"
+        />
+      </Section>
+
+      <Section
         title="Footer & Contact"
         description="Shown at the bottom of every page."
       >

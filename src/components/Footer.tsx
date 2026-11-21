@@ -53,7 +53,9 @@ const Footer = forwardRef<HTMLDivElement>((_, ref) => {
           </div>
 
           <div className="w-full">
-            <h3 className="font-semibold text-white mb-4">Contact Info</h3>
+            <h3 className="font-semibold mb-4 bg-gradient-to-r from-amber-300 to-rose-400 bg-clip-text text-transparent">
+              Contact Info
+            </h3>
             <ul className="space-y-4 text-gray-400">
               {settings.contact_address && (
                 <li className="flex items-start space-x-3">

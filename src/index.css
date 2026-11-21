@@ -18,6 +18,17 @@ html, body {
   overflow-x: hidden;
 }
 
+/* Hide the scrollbar on horizontally scrollable carousels
+   (scrolling still works via touch, trackpad, and the arrow buttons) */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 @media (prefers-color-scheme: light) {
   body {
     background-color: #ffffff;

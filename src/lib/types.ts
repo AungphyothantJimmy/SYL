@@ -48,6 +48,10 @@ export type SiteSettings = {
   about_image_url: string | null;
   about_stats: Stat[];
 
+  store_history_title: string;
+  store_history_body: string;
+  store_history_image_url: string | null;
+
   footer_description: string;
   footer_logo_url: string | null;
   contact_address: string;

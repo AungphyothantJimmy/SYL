@@ -71,10 +71,12 @@ export function TextArea({
 
 export function SelectField({
   label,
+  hint,
   children,
   ...props
 }: SelectHTMLAttributes<HTMLSelectElement> & {
   label: string;
+  hint?: string;
   children: ReactNode;
 }) {
   return (
@@ -85,7 +87,42 @@ export function SelectField({
       <select className={fieldClass} {...props}>
         {children}
       </select>
+      {hint && <span className="block text-xs text-gray-500 mt-1">{hint}</span>}
     </label>
+  );
+}
+
+/**
+ * Checkbox laid out with the same vertical rhythm as the other form fields
+ * (label line / control / hint). An invisible spacer stands in for the label
+ * line so the checkbox box lines up with neighbouring input boxes, and an
+ * invisible placeholder keeps that alignment when no hint is given.
+ */
+export function CheckboxField({
+  label,
+  hint,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string }) {
+  return (
+    <div>
+      <span
+        aria-hidden
+        className="block text-sm font-medium text-gray-700 mb-1 invisible"
+      >
+        &nbsp;
+      </span>
+      <label className="flex items-center gap-3 rounded-md border border-gray-300 bg-white px-3 py-2">
+        <input type="checkbox" className="h-4 w-4 shrink-0" {...props} />
+        <span className="text-sm text-gray-700">{label}</span>
+      </label>
+      {hint ? (
+        <span className="block text-xs text-gray-500 mt-1">{hint}</span>
+      ) : (
+        <span className="block text-xs mt-1 invisible" aria-hidden>
+          &nbsp;
+        </span>
+      )}
+    </div>
   );
 }
 

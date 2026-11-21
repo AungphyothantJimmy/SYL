@@ -8,9 +8,11 @@ import {
 import Home from "./components/Home";
 import Featured from "./components/Featured";
 import About from "./components/About";
+import StoreHistory from "./components/StoreHistory";
 import SignatureItems from "./components/SignatureItems";
 import AllItemsPage from "./components/AllItems";
 import ItemDetailPage from "./components/ItemDetail";
+import CollectionPage from "./components/CollectionPage";
 import Footer from "./components/Footer";
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminLogin from "./components/admin/AdminLogin";
@@ -35,7 +37,7 @@ const HomePage: React.FC = () => {
   );
   const items = (
     signatureProducts.length > 0 ? signatureProducts : data.products
-  ).slice(0, 3);
+  ).slice(0, 8);
 
   return (
     <>
@@ -43,6 +45,7 @@ const HomePage: React.FC = () => {
       <Featured />
       <SignatureItems items={items} showAllButton />
       <About />
+      <StoreHistory />
       <Footer ref={footerRef} />
     </>
   );
@@ -69,6 +72,7 @@ const App: React.FC = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/all-items" element={<AllItemsPage />} />
             <Route path="/item/:id" element={<ItemDetailPage />} />
+            <Route path="/collection/:id" element={<CollectionPage />} />
 
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route

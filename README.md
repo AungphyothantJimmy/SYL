@@ -6,7 +6,7 @@ The public website loads all of its content from the database, and a password-pr
 
 ## Features
 
-- Public storefront: hero, featured collections, signature products, product detail pages, about, contact/footer
+- Public storefront: hero, featured collections, signature products, product detail pages, collection pages, about, contact/footer
 - Admin panel at `#/admin`:
   - Email/password login (Supabase Auth)
   - Create, edit, reorder, and delete products
@@ -36,7 +36,7 @@ The public website loads all of its content from the database, and a password-pr
 2. Paste the contents of [`supabase/schema.sql`](supabase/schema.sql).
 3. Click **Run**.
 
-This creates the `products`, `featured_collections`, and `site_settings` tables, the `site-images` storage bucket, security policies, and seeds the current website content. It is safe to run again — it will not overwrite your edits.
+This creates the `products`, `featured_collections`, and `site_settings` tables, the `site-images` storage bucket, security policies, and seeds the current website content. It is safe to run again — it will not overwrite your edits, and re-running it applies any small migrations for databases created with an older version of this file.
 
 ## 3. Create your admin account
 
@@ -108,6 +108,12 @@ public/images/         Static fallback images
 - The public components read from that context, so the admin's changes appear after a refresh (or immediately after saving in the admin panel).
 - Uploaded images go to the public `site-images` bucket and are stored as absolute URLs.
 - Seed rows use paths like `images/s1.jpg`. `resolveImage()` prefixes the Vite base URL, so they work on root domains and sub-path deploys (such as GitHub Pages project sites).
+
+### Collections
+
+- Each featured collection automatically gets its own detail page at `#/collection/<id>`, showing the collection's image, title, and description.
+- "Explore Collection →" on the homepage opens that detail page.
+- A collection's **External URL** field is optional: leave it empty for the built-in detail page, or set a full `https://` URL to link somewhere else instead.
 
 ## Deploying
 

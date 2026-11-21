@@ -38,6 +38,11 @@ export const defaultSettings: SiteSettings = {
     { label: "500+ Designs", color: "yellow" },
   ],
 
+  store_history_title: "Our Story",
+  store_history_body:
+    "Founded with a passion for timeless beauty, our store began as a small workshop dedicated to crafting jewelry that celebrates life's most precious moments. Over the years we have grown, but our commitment to quality, craftsmanship, and personal service remains the same.\n\nEvery piece in our collection carries the story of the hands that made it and the moments it will witness.",
+  store_history_image_url: asset("nla.png"),
+
   footer_description:
     "Creating modern elegance since 2022. Your trusted destination for beautifully crafted jewelry designed to shine for a lifetime.",
   footer_logo_url: asset("logo.jpg"),

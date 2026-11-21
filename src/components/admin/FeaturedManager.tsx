@@ -24,7 +24,7 @@ const emptyFeatured = (sortOrder: number): FeaturedInput => ({
   title: "",
   description: "",
   image_url: null,
-  link: "/all-items",
+  link: "",
   sort_order: sortOrder,
 });
 
@@ -32,7 +32,7 @@ const toInput = (collection: FeaturedCollection): FeaturedInput => ({
   title: collection.title,
   description: collection.description ?? "",
   image_url: collection.image_url,
-  link: collection.link ?? "/all-items",
+  link: collection.link ?? "",
   sort_order: collection.sort_order,
 });
 
@@ -175,7 +175,11 @@ export default function FeaturedManager() {
                       </div>
                     </td>
                     <td className="py-3 pr-3 text-gray-600">
-                      {collection.link}
+                      {collection.link ? (
+                        collection.link
+                      ) : (
+                        <span className="text-gray-500">Collection page</span>
+                      )}
                     </td>
                     <td className="py-3 pr-3 text-gray-600">
                       {collection.sort_order}
@@ -242,11 +246,11 @@ export default function FeaturedManager() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <TextField
-              label="Link"
+              label="External URL (optional)"
               value={form.link}
               onChange={(event) => update("link", event.target.value)}
-              placeholder="/all-items"
-              hint="Internal route such as /all-items, or a full https:// URL."
+              placeholder="https://example.com"
+              hint="Leave empty to use the built-in collection detail page. Enter a full https:// URL to link somewhere else instead."
             />
             <TextField
               label="Sort order"

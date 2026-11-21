@@ -31,7 +31,7 @@ create table if not exists public.featured_collections (
   title text not null,
   description text not null default '',
   image_url text,
-  link text not null default '/all-items',
+  link text not null default '',
   sort_order integer not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -57,6 +57,10 @@ create table if not exists public.site_settings (
   about_body text not null default '',
   about_image_url text,
   about_stats jsonb not null default '[]'::jsonb,
+
+  store_history_title text not null default 'Our Story',
+  store_history_body text not null default '',
+  store_history_image_url text,
 
   footer_description text not null default '',
   footer_logo_url text,
@@ -133,6 +137,12 @@ drop policy if exists "site_images_admin_delete" on storage.objects;
 create policy "site_images_admin_delete" on storage.objects
   for delete to authenticated using (bucket_id = 'site-images');
 
+-- Ensure new columns exist before seeding (for databases created earlier).
+alter table public.site_settings
+  add column if not exists store_history_title text not null default 'Our Story',
+  add column if not exists store_history_body text not null default '',
+  add column if not exists store_history_image_url text;
+
 -- ----------------------------------------------------------------------------
 -- Seed: current site content (only runs when the tables are empty)
 -- ----------------------------------------------------------------------------
@@ -143,6 +153,7 @@ insert into public.site_settings (
   signature_heading, signature_subheading,
   featured_heading, featured_subheading,
   about_title, about_body, about_image_url, about_stats,
+  store_history_title, store_history_body, store_history_image_url,
   footer_description, footer_logo_url,
   contact_address, contact_phone, contact_email, contact_hours,
   facebook_url, instagram_url
@@ -167,6 +178,11 @@ Piece$t$,
 Every gemstone is handpicked for its sparkle and character. Every setting is crafted with care, making each piece as unique as the person who wears it.$t$,
   'images/nla.png',
   '[{"label":"Quality Materials","color":"green"},{"label":"Customer Delight","color":"blue"},{"label":"500+ Designs","color":"yellow"}]'::jsonb,
+  'Our Story',
+  $t$Founded with a passion for timeless beauty, our store began as a small workshop dedicated to crafting jewelry that celebrates life's most precious moments. Over the years we have grown, but our commitment to quality, craftsmanship, and personal service remains the same.
+
+Every piece in our collection carries the story of the hands that made it and the moments it will witness.$t$,
+  'images/nla.png',
   $t$Creating modern elegance since 2022. Your trusted destination for beautifully crafted jewelry designed to shine for a lifetime.$t$,
   'images/logo.jpg',
   '123 Luxury Avenue, Diamond District, New York, NY 10036',
@@ -202,8 +218,21 @@ insert into public.featured_collections (
   title, description, image_url, link, sort_order
 )
 select * from (values
-  ('Diamond Rings',  'Brilliant cuts that capture eternal love',        'images/f1.png', '/all-items', 1),
-  ('Necklaces',      'Luxurious designs for every occasion',            'images/f2.png', '/all-items', 2),
-  ('Jade Earrings',  'Classic beauty with modern sophistication',       'images/f3.png', '/all-items', 3)
+  ('Diamond Rings',  'Brilliant cuts that capture eternal love',        'images/f1.png', '', 1),
+  ('Necklaces',      'Luxurious designs for every occasion',            'images/f2.png', '', 2),
+  ('Jade Earrings',  'Classic beauty with modern sophistication',       'images/f3.png', '', 3)
 ) as seed(title, description, image_url, link, sort_order)
 where not exists (select 1 from public.featured_collections);
+
+-- ----------------------------------------------------------------------------
+-- Migrations for databases created with an older version of this file
+-- (safe to run again)
+-- ----------------------------------------------------------------------------
+
+alter table public.featured_collections
+  alter column link set default '';
+
+alter table public.site_settings
+  add column if not exists store_history_title text not null default 'Our Story',
+  add column if not exists store_history_body text not null default '',
+  add column if not exists store_history_image_url text;

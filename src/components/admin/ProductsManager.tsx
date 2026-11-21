@@ -15,6 +15,7 @@ import ImageField from "./ImageField";
 import {
   Alert,
   Button,
+  CheckboxField,
   Modal,
   Section,
   Spinner,
@@ -282,19 +283,14 @@ export default function ProductsManager() {
               }
               hint="Lower numbers appear first."
             />
-            <label className="flex items-center gap-3 self-end rounded-md border border-gray-300 px-3 py-2">
-              <input
-                type="checkbox"
-                checked={form.is_signature}
-                onChange={(event) =>
-                  update("is_signature", event.target.checked)
-                }
-                className="h-4 w-4"
-              />
-              <span className="text-sm text-gray-700">
-                Show in signature items
-              </span>
-            </label>
+            <CheckboxField
+              label="Show in signature items"
+              checked={form.is_signature}
+              onChange={(event) =>
+                update("is_signature", event.target.checked)
+              }
+              hint="Signature items are shown on the homepage."
+            />
           </div>
 
           <ImageField
