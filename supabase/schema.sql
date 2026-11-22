@@ -70,6 +70,7 @@ create table if not exists public.site_settings (
   contact_hours text not null default '',
   facebook_url text not null default '',
   instagram_url text not null default '',
+  tiktok_url text not null default '',
 
   updated_at timestamptz not null default now()
 );
@@ -141,7 +142,8 @@ create policy "site_images_admin_delete" on storage.objects
 alter table public.site_settings
   add column if not exists store_history_title text not null default 'Our Story',
   add column if not exists store_history_body text not null default '',
-  add column if not exists store_history_image_url text;
+  add column if not exists store_history_image_url text,
+  add column if not exists tiktok_url text not null default '';
 
 -- ----------------------------------------------------------------------------
 -- Seed: current site content (only runs when the tables are empty)
@@ -156,7 +158,7 @@ insert into public.site_settings (
   store_history_title, store_history_body, store_history_image_url,
   footer_description, footer_logo_url,
   contact_address, contact_phone, contact_email, contact_hours,
-  facebook_url, instagram_url
+  facebook_url, instagram_url, tiktok_url
 )
 values (
   1,
@@ -191,7 +193,8 @@ Every piece in our collection carries the story of the hands that made it and th
   $t$Mon - Sat: 10:00 AM - 7:00 PM
 Sunday: 12:00 PM - 5:00 PM$t$,
   'https://web.facebook.com/profile.php?id=100063796764466',
-  'https://www.instagram.com/syl__jewelry/'
+  'https://www.instagram.com/syl__jewelry/',
+  ''
 )
 on conflict (id) do nothing;
 
@@ -235,4 +238,5 @@ alter table public.featured_collections
 alter table public.site_settings
   add column if not exists store_history_title text not null default 'Our Story',
   add column if not exists store_history_body text not null default '',
-  add column if not exists store_history_image_url text;
+  add column if not exists store_history_image_url text,
+  add column if not exists tiktok_url text not null default '';

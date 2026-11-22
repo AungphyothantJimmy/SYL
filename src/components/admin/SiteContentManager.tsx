@@ -343,6 +343,13 @@ export default function SiteContentManager() {
             onChange={(event) => update("instagram_url", event.target.value)}
             placeholder="https://instagram.com/..."
           />
+          <TextField
+            label="TikTok URL"
+            type="url"
+            value={settings.tiktok_url}
+            onChange={(event) => update("tiktok_url", event.target.value)}
+            placeholder="https://tiktok.com/@..."
+          />
         </div>
         <p className="text-xs text-gray-500">
           Leave a social link empty to hide its icon.

@@ -14,6 +14,9 @@ function normalizeSettings(row: Record<string, unknown>): SiteSettings {
   if (!Array.isArray(merged.about_stats)) {
     merged.about_stats = defaultSiteData.settings.about_stats;
   }
+  if (typeof merged.tiktok_url !== "string") {
+    merged.tiktok_url = "";
+  }
   return merged;
 }
 

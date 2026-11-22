@@ -52,6 +52,7 @@ export const defaultSettings: SiteSettings = {
   contact_hours: "Mon - Sat: 10:00 AM - 7:00 PM\nSunday: 12:00 PM - 5:00 PM",
   facebook_url: "https://web.facebook.com/profile.php?id=100063796764466",
   instagram_url: "https://www.instagram.com/syl__jewelry/",
+  tiktok_url: "",
 };
 
 export const defaultFeatured: FeaturedCollection[] = [

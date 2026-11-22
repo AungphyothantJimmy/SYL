@@ -60,6 +60,7 @@ export type SiteSettings = {
   contact_hours: string;
   facebook_url: string;
   instagram_url: string;
+  tiktok_url: string;
 
   updated_at?: string;
 };
